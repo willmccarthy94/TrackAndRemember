@@ -1,0 +1,12 @@
+% RunExperiment
+% This function should be called whenever th 
+
+function RunExperiment()
+
+    % Load experimental variables struct
+    load('ExperimentVars.mat');
+
+    %PTB
+    
+    
+end

@@ -10,4 +10,5 @@ nTrials = 20; %Trials per block
 save('trackremember_ppt_XXX','data');
 
 % Experiment data should be saved in the following file
+% This includes: BlockTypes, nTrials, current participant list, 
 save('trackremember_data', 'experiment_data');
