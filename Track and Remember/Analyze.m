@@ -1,1 +1,1 @@
-% Analyze data from each
+% Analyze data from each subject
