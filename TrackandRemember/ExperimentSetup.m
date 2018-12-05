@@ -23,23 +23,37 @@ save('ExperimentVars.mat', 'ExpVars');
 save('/RawData/trackremember_ppt_XXX.mat','data');
 %These can then be 'looped over' for analysis
 
+%% Setup for analysis
+% IMPORTANT: Make sure you are working from TrackandRemember folder in
+% order to access correct files
+
+clc
+clear
+
 rawDataPath = [pwd '/RawData'];
 dataPath = [pwd '/Data'];
 
-save(fullfile(dataPath, 'allData'), 'allData');
-save(fullfile(rawDataPath, 'trackremember_ppt_XXX.mat'), 'data');
+%save(fullfile(dataPath, 'allData'), 'allData');
+%save(fullfile(rawDataPath, 'trackremember_ppt_XXX.mat'), 'data');
 
 
-%% Participant data structure
+%load(fullfile(rawDataPath, 'trackremember_ppt_XXX.mat'));
+
+
+%% Example participant data structure
 % Save this for each participant. Analysis script will compile these into
 % one file
 
-data.move.resp = % Value from 1..8 representing color selection
-data.move.ans = % Value from 1..8 representing correct color
-data.move.acc = % 1 for correct response, 0 for incorrect
 
-data.still.resp = % Value from 1..8 representing color selection
-data.still.ans = % Value from 1..8 representing correct color
-data.still.acc = % 1 for correct response, 0 for incorrect
+data.ppt = 102;
+data.age = 28;
+data.DateTime = datetime;
 
+data.move.resp = [8 2 3 5 3 1 4 5 2 7] % Value from 1..8 representing color selection
+data.move.expr = [8 2 1 1 3 3 4 5 6 7] % Value from 1..8 representing correct color
+data.move.acc = data.move.resp == data.move.expr % 1 for correct response, 0 for incorrect
+
+data.still.resp = [4 2 4 1 7 1 4 5 2 7] % Value from 1..8 representing color selection
+data.still.expr =  [4 2 3 1 7 3 4 5 6 7] % Value from 1..8 representing correct color
+data.still.acc = data.move.resp == data.move.expr % 1 for correct response, 0 for incorrect
 

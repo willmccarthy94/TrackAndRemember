@@ -50,7 +50,7 @@ for i = 1:length(fileIndex)
     
 end
 
-save(fullfile(dataPath, 'allData'), 'accs', 'resps', 'expr', 'subjects');
+save(fullfile(dataPath, 'allData'), 'accs', 'resps','expr','subjects');
 
 
 %%
