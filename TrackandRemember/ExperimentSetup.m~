@@ -20,6 +20,26 @@ save('ExperimentVars.mat', 'ExpVars');
 
 %Data
 % Each subject's data should be stored in a file with the following naming convention:
-save('trackremember_ppt_XXX.mat','data');
+save('/RawData/trackremember_ppt_XXX.mat','data');
 %These can then be 'looped over' for analysis
+
+rawdatapath = [pwd '/RawData/'];
+datapath = [pwd '/Data/'];
+
+save(fullfile(dataPath, 'allData'), 'data');
+save(fullfile(dataPath, 'allData'), 'data');
+
+
+%% Participant data structure
+% Save this for each participant. Analysis script will compile these into
+% one file
+
+data.move.resp = % Value from 1..8 representing color selection
+data.move.ans = % Value from 1..8 representing correct color
+data.move.acc = % 1 for correct response, 0 for incorrect
+
+data.still.resp = % Value from 1..8 representing color selection
+data.still.ans = % Value from 1..8 representing correct color
+data.still.acc = % 1 for correct response, 0 for incorrect
+
 
