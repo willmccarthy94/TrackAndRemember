@@ -40,20 +40,27 @@ dataPath = [pwd '/Data'];
 %load(fullfile(rawDataPath, 'trackremember_ppt_XXX.mat'));
 
 
-%% Example participant data structure
+% Example participant data structure
 % Save this for each participant. Analysis script will compile these into
 % one file
 
 
-data.ppt = 102;
-data.age = 28;
-data.DateTime = datetime;
+data.subinfo.ppt = 103; % ppt number
+data.subinfo.age = 23; % age
+data.subinfo.DateTime = datetime; % Current time and date
+data.subinfo.moveOrder = 1; % Did ppt have move block first (1) or second (2) this could later be replaced with an array if we decide to interleave more blocks
 
-data.move.resp = [8 2 3 5 3 1 4 5 2 7] % Value from 1..8 representing color selection
-data.move.expr = [8 2 1 1 3 3 4 5 6 7] % Value from 1..8 representing correct color
-data.move.acc = data.move.resp == data.move.expr % 1 for correct response, 0 for incorrect
+% I'm slightly concerned about this solution for scaling. I think that we
+% may be better off saving all reaponses in one array, with an index
+% telling us which kind of block it was from. Then we could filter by
+% blocktype. We could use this to quickly calculate the position of each block  
 
-data.still.resp = [4 2 4 1 7 1 4 5 2 7] % Value from 1..8 representing color selection
-data.still.expr =  [4 2 3 1 7 3 4 5 6 7] % Value from 1..8 representing correct color
-data.still.acc = data.move.resp == data.move.expr % 1 for correct response, 0 for incorrect
+data.move.resp = [8 2 3 5 3 1 4 5 2 7]; % Value from 1..8 representing color selection
+data.move.expr = [7 1 1 1 1 3 5 5 6 7]; % Value from 1..8 representing correct color
+data.move.acc = data.move.resp == data.move.expr; % 1 for correct response, 0 for incorrect
 
+data.still.resp = [4 2 4 1 7 1 4 5 2 7]; % Value from 1..8 representing color selection
+data.still.expr =  [4 2 3 1 7 3 4 5 6 7]; % Value from 1..8 representing correct color
+data.still.acc = data.still.resp == data.still.expr; % 1 for correct response, 0 for incorrect
+
+save(fullfile(rawDataPath, 'trackremember_ppt_103.mat'), 'data');

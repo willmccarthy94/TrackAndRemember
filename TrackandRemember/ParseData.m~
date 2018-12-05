@@ -1,7 +1,5 @@
-% Analyze data from each subject
-% The purpose of this file is to analyse the data from multiple
-% participants, where the data from each participant is saved as an
-% individual file. This will allow us to do analysis while still collecting
+% Aggregate data from individual data file into one big file
+% This approach will allow us to do analysis while still collecting
 % participants, as well as quickly exclude participants we deem to be
 % outliers
 
@@ -50,7 +48,6 @@ for i = 1:length(fileIndex)
     
 end
 
-save(fullfile(dataPath, 'allData'), 'accs', 'resps','expr','subjects');
+save(fullfile(dataPath, 'allData'), 'accs', 'resps', 'expr', 'subjects');
 
 
-%%

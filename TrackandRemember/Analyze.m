@@ -1,56 +1,33 @@
-% Analyze data from each subject
-% The purpose of this file is to analyse the data from multiple
-% participants, where the data from each participant is saved as an
-% individual file. This will allow us to do analysis while still collecting
-% participants, as well as quickly exclude participants we deem to be
-% outliers
-
-% IMPORTANT: Make sure you are running file in TrackandRemember folder in
-% order to properly load scripts
+%% Analyse data
+% Basic analysis for experimental data.
+% Precondition: Data is parsed using ParseData script.
+% IMPORTANT: Make sure you are in TrackandRemember Directory
 
 clc
 clear
 
-rawDataPath = [pwd '/RawData'];
+% Load data
 dataPath = [pwd '/Data'];
+load(fullfile(dataPath, 'allData'));
 
+% Calculate number of subjects
+nsub = length(subjects);
 
-files = dir(fullfile(rawDataPath, 'trackremember_ppt_1*.mat')); %Create struct of all participant data 
-fileIndex = find(~[files.isdir]); % Delete subfolders
-nsubj = length(fileIndex); % count files
+%%  Plot bar of accuracy per subject
+% NEED TO SORT LABELS
 
+figure; hold on;
+bar(mean(accs,3));
+xticklabels(subjects);
+xlabel('subjects');
 
-%% Load each subject
+%%  Plot bar of accuracy averaged over subjects
+% NOT SURE IF CORRE
 
-subjects = zeros(1,nsubj);
-
-for i = 1:length(fileIndex)
-        
-    % Load file name for participant
-    fileName = files(fileIndex(i)).name;
-    load([rawDataPath '/' fileName]);
-    
-    % Add subject to subjects array
-    subjects(i) = data.ppt;
-    
-    % Add accuracy to accuracy array 
-    % Accuracy array is 3D array: (Subject,Blocktype,Trial)
-    accs(i,1,:) = data.still.acc;
-    accs(i,2,:) = data.still.acc;
-    
-    % Add response to responses array 
-    % Response array is 3D array: (Subject,Blocktype,Trial)
-    resps(i,1,:) = data.still.resp;
-    resps(i,2,:) = data.still.resp;
-    
-    % Add expected response to expected response array 
-    % Expected rsponse array is 3D array: (Subject,Blocktype,Trial)
-    expr(i,1,:) = data.still.expr;
-    expr(i,2,:) = data.still.expr;
-    
-end
-
-save(fullfile(dataPath, 'allData'), 'accs', 'resps', 'expr', 'subjects');
-
-
-%%
+figure; hold on;
+bar(mean(mean(accs,3)));
+e = errorbar(mean(mean(accs,3)),std(mean(accs,3)));
+e.LineStyle = 'none';
+e.LineWidth = 2;
+xticklabels(subjects);
+xlabel('subjects');
