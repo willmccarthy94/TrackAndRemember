@@ -114,7 +114,7 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
     if TrialType == 0
     	keypress = 0;
 
-        whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+        whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('h') KbName('j') KbName('k') KbName('l')];
         nTrial = 3;
 
         Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
@@ -170,10 +170,10 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                 Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
                 Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
                 Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
-                Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
-                Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
-                Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
-                Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+                Screen('DrawText', w, 'h', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+                Screen('DrawText', w, 'j', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+                Screen('DrawText', w, 'k', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+                Screen('DrawText', w, 'l', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
                 %set location of answer keys below corresponding color answer
                 %box
 
@@ -200,7 +200,7 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
     elseif TrialType == 1
         keypress = 0;
 
-        whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+        whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('h') KbName('j') KbName('k') KbName('l')];
 
         Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
         Screen('Flip', w);
@@ -253,10 +253,10 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                 Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
                 Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
                 Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
-                Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
-                Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
-                Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
-                Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+                Screen('DrawText', w, 'h', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+                Screen('DrawText', w, 'j', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+                Screen('DrawText', w, 'k', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+                Screen('DrawText', w, 'l', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
 
                 Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
                 % horizontal line for prompt arrow
@@ -311,10 +311,10 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                     Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
                     Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
                     Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
-                    Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
-                    Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
-                    Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
-                    Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+                    Screen('DrawText', w, 'h', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+                    Screen('DrawText', w, 'j', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+                    Screen('DrawText', w, 'k', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+                    Screen('DrawText', w, 'l', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
                     %set location of answer keys below corresponding color answer
                     %box
 
@@ -345,13 +345,13 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                     blockdata.resp(j) = 3;
                 elseif (keyCode(KbName('f')))
                     blockdata.resp(j) = 4;
-                elseif (keyCode(KbName('j')))
+                elseif (keyCode(KbName('h')))
                     blockdata.resp(j) = 5;
-                elseif (keyCode(KbName('k')))
+                elseif (keyCode(KbName('j')))
                     blockdata.resp(j) = 6;
-                elseif (keyCode(KbName('l')))
+                elseif (keyCode(KbName('k')))
                     blockdata.resp(j) = 7;
-                elseif (keyCode(KbName(';')))
+                elseif (keyCode(KbName('l')))
                     blockdata.resp(j) = 8;
                 end
 
@@ -363,7 +363,7 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
         elseif TrialType == 1
             keypress = 0;
 
-            whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+            whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('h') KbName('j') KbName('k') KbName('l')];
 
             Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
             Screen('Flip', w);
@@ -416,10 +416,10 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                     Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
                     Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
                     Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
-                    Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
-                    Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
-                    Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
-                    Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+                    Screen('DrawText', w, 'h', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+                    Screen('DrawText', w, 'j', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+                    Screen('DrawText', w, 'k', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+                    Screen('DrawText', w, 'l', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
 
                     Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
                     % horizontal line for prompt arrow
@@ -448,13 +448,13 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                     blockdata.resp(j) = 3;
                 elseif (keyCode(KbName('f')))
                     blockdata.resp(j) = 4;
-                elseif (keyCode(KbName('j')))
+                elseif (keyCode(KbName('h')))
                     blockdata.resp(j) = 5;
-                elseif (keyCode(KbName('k')))
+                elseif (keyCode(KbName('j')))
                     blockdata.resp(j) = 6;
-                elseif (keyCode(KbName('l')))
+                elseif (keyCode(KbName('k')))
                     blockdata.resp(j) = 7;
-                elseif (keyCode(KbName(';')))
+                elseif (keyCode(KbName('l')))
                     blockdata.resp(j) = 8;
                 end
 
@@ -465,7 +465,7 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
             %MOVING TRIAL_________________________________________________________________________
             elseif TrialType == 2
 
-                whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+                whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('h') KbName('j') KbName('k') KbName('l')];
 
                 Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
                 Screen('Flip', w);
@@ -650,10 +650,10 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                         Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
                         Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
                         Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
-                        Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
-                        Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
-                        Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
-                        Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+                        Screen('DrawText', w, 'h', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+                        Screen('DrawText', w, 'j', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+                        Screen('DrawText', w, 'k', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+                        Screen('DrawText', w, 'l', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
 
                         Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
                         % horizontal line for prompt arrow
@@ -681,13 +681,13 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                         blockdata.resp(j) = 3;
                     elseif (keyCode(KbName('f')))
                         blockdata.resp(j) = 4;
-                    elseif (keyCode(KbName('j')))
+                    elseif (keyCode(KbName('h')))
                         blockdata.resp(j) = 5;
-                    elseif (keyCode(KbName('k')))
+                    elseif (keyCode(KbName('j')))
                         blockdata.resp(j) = 6;
-                    elseif (keyCode(KbName('l')))
+                    elseif (keyCode(KbName('k')))
                         blockdata.resp(j) = 7;
-                    elseif (keyCode(KbName(';')))
+                    elseif (keyCode(KbName('l')))
                         blockdata.resp(j) = 8;
                     end
 
