@@ -347,18 +347,15 @@ elseif TrialType == 1
         % retrieving screen flip interval of screen being used
         % 1/monitorFlipInterval is the frame rate of the monitor
         
-        black = BlackIndex(w); white = WhiteIndex(w); grey= [160 160 160];
-        r=20; %radius of ball
-        dur=2; %time after stimulus ends before prompted to which ball to recall
+       % black = BlackIndex(w); white = WhiteIndex(w); 
+       
+        
         
         
         
        
         
-        %Here I'll set the locations of options for the response screen. I tried to
-        %soft code this but if it doesn't work on your screen I recommend tweaking
-        %it around.
-        
+        %Here I'll set the locations of options for the response screen.
         squareSize = screenXpixels/16  ;
         [xCenter, yCenter] = RectCenter(rect);
         
@@ -503,7 +500,7 @@ elseif TrialType == 1
             Screen('FillRect',w,black); %creating black screen
             Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
             Screen('Flip', w);
-            WaitSecs(dur);
+            WaitSecs(ISI);
             
             Screen('FillRect',w,black); %creating black screen
             
