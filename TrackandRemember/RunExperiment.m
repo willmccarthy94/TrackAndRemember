@@ -61,22 +61,22 @@ function RunExperiment()
     if mod(data.subinfo.ppt, 2) == 1
         data.subinfo.moveOrder = 2; % Indicate that move block came second
         [data.still] = TrialFunctionFunction(nTrial, 1, w, rect);
-        save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
+        %save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
         [data.move] = TrialFunctionFunction(nTrial, 2, w, rect);
-        save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
+        %save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
     else
         data.subinfo.moveOrder = 1; % Indicate that move block came first
         [data.move] = TrialFunctionFunction(nTrial, 2, w, rect);
-        save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
+        %save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
         [data.still] = TrialFunctionFunction(nTrial, 1, w, rect);
-        save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
+        %save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
     end
 
     Screen('CloseAll');
     ShowCursor;
 
 
-    save(fullfile(rawDataPath, filename), 'data');
+    %save(fullfile(rawDataPath, filename), 'data');
 
 
     
