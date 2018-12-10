@@ -5,9 +5,12 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
 %% Response Screen
 
 % Just for now
-Screen('Preference', 'SkipSyncTests', 1);
+Screen('Preference', 'SkipSyncTests', 0);
+res=[0 0 800 600]; % setting size of window to be displayed
+%res=[];
 screen_num = 0;
-[w, rect] = Screen('OpenWindow', screen_num, [0 0 0]);
+[w, rect] = Screen('OpenWindow', screen_num, 0, res);
+
 %Gotta find the center
 [xCenter, yCenter] = RectCenter(rect);
 %Let's also find the screen size
@@ -49,11 +52,15 @@ yCoords = [0 0 -40 40];
 allCoords = [xCoords; yCoords];
 
 %Dot size/location info
-dot.size = 100;
-dot.LocationL = [xCenter-500, yCenter]; %Left
-dot.LocationR = [xCenter+500, yCenter]; %Right
+dot.size = 50;
+dot.velocity=10; 
+dot.LocationL = [screenXpixels/4, yCenter]; %Left
+dot.LocationR = [screenXpixels*3/4, yCenter]; %Right
 black = [0 0 0];
 white = [255 255 255];
+
+stimDur=2;
+ISI=1;
 %% Set up trial arrays
 %Here I'm creating trial indexes. Again, I recommend evaluating just this
 %section to help visualizing what I'm trying to do.
@@ -95,13 +102,13 @@ TargetArray = Shuffle(TargetArray);
 %Here I'll set the locations of options for the response screen. I tried to
 %soft code this but if it doesn't work on your screen I recommend tweaking
 %it around.
-InitialX = screenXpixels/4;
-Gap = 0;
-squareSize = 50;
+
+squareSize = screenXpixels/16;
+[xCenter, yCenter] = RectCenter(rect);
 
 for i = 1:8
-    ColorLocation(i,:) = [xCenter-InitialX+Gap-squareSize, yCenter-squareSize, xCenter-InitialX+Gap+squareSize, yCenter+squareSize];
-    Gap = Gap+150;
+    ColorLocation(i,:) = [(screenXpixels*i/18)+(squareSize*(i-1)) , yCenter-squareSize/2, (screenXpixels*i/18 )+( squareSize*i), yCenter+squareSize/2 ];
+    LetterLoc(i,:) = [(screenXpixels*i/18)+(squareSize*(i-1)) , yCenter+squareSize/2];
 end
 %% Trial+Reponse Screen
 
@@ -121,10 +128,14 @@ if TrialType == 0
     
     whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
     nTrial = 3;
-    for j = 1:nTrial
+    
         Screen('DrawText', w, ['Press any key to start'], xCenter-150, yCenter, white);
         Screen('Flip', w);
         KbStrokeWait; %Wait until a key press
+        
+    for j = 1:nTrial
+        
+        WaitSecs(ISI);
         
         %Set target location
         if TargetArray(j) == 1 %Left
@@ -141,14 +152,14 @@ if TrialType == 0
         
         Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
         Screen('Flip', w);
-        WaitSecs(1);
+        WaitSecs(ISI);
         
         %Draw two dots
         Screen('DrawDots', w, dot.LocationL, dot.size, colorInfo1, [0 0], [1]); %This is random color dot
         Screen('DrawDots', w, dot.LocationR, dot.size, colorInfo2, [0 0], [1]); %Another random color dot
         Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
         Screen('Flip', w);
-        WaitSecs(2);
+        WaitSecs(stimDur);
         
         [keyIsDown,secs,keyCode]=KbCheck();
         
@@ -163,11 +174,31 @@ if TrialType == 0
             Screen('FillRect', w, Color7, ColorLocation(7,:));
             Screen('FillRect', w, Color8, ColorLocation(8,:));
             
+            Screen('TextFont', w, 'Times'); %set text font
+            Screen('TextSize', w,20 ); %set text size
+            Screen('DrawText', w, 'a', LetterLoc(1,1),LetterLoc(1,2), [250 250 250]);
+            Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
+            Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
+            Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
+            Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+            Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+            Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+            Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+            %set location of answer keys below corresponding color answer
+            %box
+            
+            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
+            % horizontal line for prompt arrow
+            
             if TargetArray(j) == 1
-                Screen('DrawText', w, '<---', xCenter-100, yCenter-300);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                % left arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
             elseif TargetArray(j) == 2
-                Screen('DrawText', w, '--->', xCenter-100, yCenter-300);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                % right arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
             Screen('Flip', w);
@@ -202,11 +233,11 @@ elseif TrialType == 1
     
     whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
     
+    Screen('DrawText', w, ['Press any key to start'], xCenter-150, yCenter, white);
+    Screen('Flip', w);
+    KbStrokeWait; %Wait until a key pres
     
-    for j = 1:nTrial
-        Screen('DrawText', w, ['Press any key to start'], xCenter-150, yCenter, white);
-        Screen('Flip', w);
-        KbStrokeWait; %Wait until a key press
+    for j = 1:nTrial                     
         
         %Set target location
         if TargetArray(j) == 1 %Left
@@ -223,14 +254,18 @@ elseif TrialType == 1
         
         Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
         Screen('Flip', w);
-        WaitSecs(1);
+        WaitSecs(ISI);
         
         %Draw two dots
-        Screen('DrawDots', w, dot.LocationL, dot.size, colorInfo1, [0 0], [1]); %This is random color dot
-        Screen('DrawDots', w, dot.LocationR, dot.size, colorInfo2, [0 0], [1]); %Another random color dot
+        %Screen('DrawDots', w, dot.LocationL, dot.size, colorInfo1, [0 0], [1]); %This is random color dot
+        Screen('FillOval', w , colorInfo1, [dot.LocationL(1)-dot.size dot.LocationL(2)-dot.size dot.LocationL(1)+dot.size dot.LocationL(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of left field
+        %Screen('DrawDots', w, dot.LocationR, dot.size, colorInfo2, [0 0], [1]); %Another random color dot
+        Screen('FillOval', w , colorInfo2, [dot.LocationR(1)-dot.size dot.LocationR(2)-dot.size dot.LocationR(1)+dot.size dot.LocationR(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of right field
         Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
         Screen('Flip', w);
-        WaitSecs(2);
+        WaitSecs(stimDur);
         
         [keyIsDown,secs,keyCode]=KbCheck();
         
@@ -245,11 +280,29 @@ elseif TrialType == 1
             Screen('FillRect', w, Color7, ColorLocation(7,:));
             Screen('FillRect', w, Color8, ColorLocation(8,:));
             
+            Screen('TextFont', w, 'Times'); %set text font
+            Screen('TextSize', w,20 ); %set text size
+            Screen('DrawText', w, 'a', LetterLoc(1,1),LetterLoc(1,2), [250 250 250]);
+            Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
+            Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
+            Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
+            Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+            Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+            Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+            Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+            
+            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
+            % horizontal line for prompt arrow
+            
             if TargetArray(j) == 1
-                Screen('DrawText', w, '<---', xCenter-100, yCenter-300);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                % left arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
             elseif TargetArray(j) == 2
-                Screen('DrawText', w, '--->', xCenter-100, yCenter-300);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                % right arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
             Screen('Flip', w);
@@ -282,31 +335,26 @@ elseif TrialType == 1
     %MOVING TRIAL__________________________________________________________________________
     elseif TrialType == 2
         
+        whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+        
         flipSpd = 2; %  a flip every 12 frames; higher number of frames --> slower
         
-        dispTime=2;
         monitorFlipInterval = Screen('GetFlipInterval', w);
         % retrieving screen flip interval of screen being used
         % 1/monitorFlipInterval is the frame rate of the monitor
         
         black = BlackIndex(w); white = WhiteIndex(w); grey= [160 160 160];
         r=20; %radius of ball
-        v=5; % velocity of ball
         dur=2; %time after stimulus ends before prompted to which ball to recall
-        side=mod(randi(10),2);
         
         
-        x1 = screenXpixels/4;%dot.LocationL initial
-        y1 = screenYpixels/2;
         
-        x2 = screenXpixels*3/4; %dot.LocationR initial
-        y2 = screenYpixels/2;
+       
         
         %Here I'll set the locations of options for the response screen. I tried to
         %soft code this but if it doesn't work on your screen I recommend tweaking
         %it around.
-        InitialX = screenXpixels/4;
-        Gap = 0;
+        
         squareSize = screenXpixels/16  ;
         [xCenter, yCenter] = RectCenter(rect);
         
@@ -322,15 +370,19 @@ elseif TrialType == 1
             colorInfo1 = ColorArray(TrialMotion(1,j), 2:end);
             colorInfo2 = ColorArray(TrialMotion(2,j), 2:end);
             
-            for i=1:round(dispTime/(flipSpd*monitorFlipInterval)) %to make it until you press a button
+            x1 = dot.LocationL(1);%dot.LocationL initial
+            y1 = dot.LocationL(2);
+            
+            x2 = dot.LocationR(1); %dot.LocationR initial
+            y2 = dot.LocationR(2);
+            
+            for i=1:round(stimDur/(flipSpd*monitorFlipInterval)) %to make it until you press a button
                 
-                Screen('DrawLine',w, grey, screenXpixels/2, screenYpixels/2-25, screenXpixels/2 ,screenYpixels/2+25, 4);
-                % vertical line for fixation cross
-                Screen('DrawLine',w, grey, screenXpixels/2-25, screenYpixels/2, screenXpixels/2+25 ,screenYpixels/2, 4);
-                % horizontal line for fixation cross
-                Screen('DrawDots', w , [x1,y1], r, colorInfo1, [0 0], 1);
+                Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross              
+                Screen('FillOval', w , colorInfo1, [x1-dot.size y1-dot.size x1+dot.size y1+dot.size],2*dot.size);
                 %Start ball 1 at the center of left field
-                Screen('DrawDots', w, [x2, y2], r, colorInfo2, [0 0], 1);
+                Screen('FillOval', w , colorInfo2, [x2-dot.size y2-dot.size x2+dot.size y2+dot.size],2*dot.size);
+                %Start ball 1 at the center of left field               
                 %start ball 2 at the center of right field
                 %Screen('Flip', w);
                 vbl = Screen('Flip', w, vbl+(flipSpd*monitorFlipInterval));
@@ -347,9 +399,9 @@ elseif TrialType == 1
                 %uncomment above line to view different in movement of balls
                 
                 
-                x1 = x1+v*dx1; y1 = y1+v*dy1;
+                x1 = x1+dot.velocity*dx1; y1 = y1+dot.velocity*dy1;
                 %calculate new position of ball 1
-                x2 = x2+v*dx2; y2 = y2+v*dy2;
+                x2 = x2+dot.velocity*dx2; y2 = y2+dot.velocity*dy2;
                 %calculate new position of ball 2
                 
                 
@@ -417,12 +469,12 @@ elseif TrialType == 1
                 %difference movement as it reaches the boundaries
                 %------------------------------------------------------------------
                 
-                if ((x1+v*dx1) > (screenXpixels/2-100)) | ((x1+v*dx1)< r)
+                if ((x1+dot.velocity*dx1) > (screenXpixels/2-100)) | ((x1+dot.velocity*dx1)< dot.size)
                     %if next movement will go beyond defined 'x' boundaries
                     dx1=dx1*(-1); % reverse direction of dx1 for a bounce effect
                 end
                 
-                if ((y1+v*dy1) > (screenYpixels-r)) | ((y1+v*dy1) < r)
+                if ((y1+dot.velocity*dy1) > (screenYpixels-dot.size)) | ((y1+dot.velocity*dy1) < dot.size)
                     % if next move will go beyond defined 'y' boundaries
                     dy1=dy1*(-1); %reverse direction of dy1 for bounce effece
                 end
@@ -431,12 +483,12 @@ elseif TrialType == 1
                 %comment section below and uncomment designated section above to view
                 %difference of ball action as it reaches boundaries
                 
-                if ((x2+v*dx2) < (screenXpixels/2+100)) | ((x2+v*dx2) > (screenXpixels-r))
+                if ((x2+dot.velocity*dx2) < (screenXpixels/2+100)) | ((x2+dot.velocity*dx2) > (screenXpixels-dot.size))
                     %     %if next movement will go beyond defined 'x' boundaries
                     dx2=dx2*(-1); % reverse direction of dx1 for a bounce effect
                 end
                 
-                if ((y2+v*dy2) > (screenYpixels-r)) | ((y2+v*dy2) < r)
+                if ((y2+dot.velocity*dy2) > (screenYpixels-dot.size)) | ((y2+dot.velocity*dy2) < dot.size)
                     %     %if next move will go beyond defined 'y' boundaries
                     dy2=dy2*(-1); %reverse direction of dy1 for bounce effece
                 end
@@ -445,18 +497,11 @@ elseif TrialType == 1
             end
             
             Screen('FillRect',w,black); %creating black screen
-            Screen('DrawLine',w, grey, screenXpixels/2, screenYpixels/2-25, screenXpixels/2 ,screenYpixels/2+25, 4);
-            % vertical line for fixation cross
-            Screen('DrawLine',w, grey, screenXpixels/2-25, screenYpixels/2, screenXpixels/2+25 ,screenYpixels/2, 4);
-            % horizontal line for fixation cross
+            Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
             Screen('Flip', w);
             WaitSecs(dur);
             
             Screen('FillRect',w,black); %creating black screen
-            % Screen('DrawLine',w, grey, screenXpixels/2, screenYpixels/2-25, screenXpixels/2 ,screenYpixels/2+25, 4);
-            % % vertical line for fixation cross
-            % Screen('DrawLine',w, grey, screenXpixels/2-25, screenYpixels/2, screenXpixels/2+25 ,screenYpixels/2, 4);
-            % % horizontal line for fixation cross
             
             while(~KbCheck)
                 Screen('FillRect', w, Color1, ColorLocation(1,:));
@@ -479,24 +524,45 @@ elseif TrialType == 1
                 Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
                 Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
                 
-                Screen('DrawLine',w, white, screenXpixels/2-35, screenYpixels/3+50, screenXpixels/2+35 ,screenYpixels/3+50, 7);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
                 % horizontal line for prompt arrow
                 
                 if TargetArray(j) ==1 %left
-                    Screen('DrawLine',w, white, screenXpixels/2-35, screenYpixels/3+50, screenXpixels/2-15 ,screenYpixels/3+30, 7);
-                    % horizontal line for prompt arrow
-                    Screen('DrawLine',w, white, screenXpixels/2-35, screenYpixels/3+50, screenXpixels/2-15 ,screenYpixels/3+70, 7);
-                    % horizontal line for prompt arrow
+                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
+                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                    % left arrowhead for prompt arrow
+                    blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
                 else %right
-                    Screen('DrawLine',w, white, screenXpixels/2+15, screenYpixels/3+30, screenXpixels/2+35 ,screenYpixels/3+50, 7);
-                    % horizontal line for prompt arrow
-                    Screen('DrawLine',w, white, screenXpixels/2+15, screenYpixels/3+70, screenXpixels/2+35 ,screenYpixels/3 +50, 7);
-                    % horizontal line for prompt arrow
+                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
+                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                    % right arrowhead for prompt arrow
+                    blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
                 end
                 Screen('Flip', w);
-                keypress = KbCheck;
+                [keyIsDown,secs,keyCode]=KbCheck();
             end
+            
+            if (keyCode(KbName('a')))
+                blockdata.resp(j) = 1;
+            elseif (keyCode(KbName('s')))
+                blockdata.resp(j) = 2;
+            elseif (keyCode(KbName('d')))
+                blockdata.resp(j) = 3;
+            elseif (keyCode(KbName('f')))
+                blockdata.resp(j) = 4;
+            elseif (keyCode(KbName('j')))
+                blockdata.resp(j) = 5;
+            elseif (keyCode(KbName('k')))
+                blockdata.resp(j) = 6;
+            elseif (keyCode(KbName('l')))
+                blockdata.resp(j) = 7;
+            elseif (keyCode(KbName(';')))
+                blockdata.resp(j) = 8;
+            end
+        
         end
+        blockdata.acc = blockdata.resp == blockdata.expr;
+        
 end
         
 end
