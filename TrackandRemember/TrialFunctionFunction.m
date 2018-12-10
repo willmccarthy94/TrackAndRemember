@@ -189,17 +189,17 @@ if TrialType == 0
             %set location of answer keys below corresponding color answer
             %box
             
-            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
+            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
             % horizontal line for prompt arrow
             
             if TargetArray(j) == 1
-                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                 % left arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
             elseif TargetArray(j) == 2
-                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                 % right arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
@@ -291,17 +291,17 @@ elseif TrialType == 1
             Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
             Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
             
-            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
+            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
             % horizontal line for prompt arrow
             
             if TargetArray(j) == 1
-                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                 % left arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
             elseif TargetArray(j) == 2
-                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                 % right arrowhead for prompt arrow
                 blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
@@ -525,17 +525,17 @@ elseif TrialType == 1
                 Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
                 Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
                 
-                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
                 % horizontal line for prompt arrow
                 
                 if TargetArray(j) ==1 %left
-                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                     % left arrowhead for prompt arrow
                     blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
                 else %right
-                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                     % right arrowhead for prompt arrow
                     blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
                 end
