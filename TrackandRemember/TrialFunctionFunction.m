@@ -1,15 +1,15 @@
 %0: practice, 1: still, 2: motion
 %working
-function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
+function [blockdata] = TrialFunctionFunction(nTrial,TrialType, w, rect)
 
 %% Response Screen
 
 % Just for now
-Screen('Preference', 'SkipSyncTests', 0);
-res=[0 0 800 600]; % setting size of window to be displayed
-%res=[];
-screen_num = 0;
-[w, rect] = Screen('OpenWindow', screen_num, 0, res);
+% Screen('Preference', 'SkipSyncTests', 0);
+% res=[0 0 800 600]; % setting size of window to be displayed
+% %res=[];
+% screen_num = 0;
+% [w, rect] = Screen('OpenWindow', screen_num, 0, res);
 
 %Gotta find the center
 [xCenter, yCenter] = RectCenter(rect);

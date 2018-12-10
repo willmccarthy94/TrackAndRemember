@@ -19,7 +19,7 @@ function RunExperiment()
     data.subinfo.ppt = input('Enter subject number: ');
     data.subinfo.age = input('Enter your age: ');
     data.subinfo.DateTime = datestr(now);
-    nTrial = 10;
+    nTrial = 3; %10
 
     Screen('Preference', 'SkipSyncTests', 1);
     screen_num = 0;
@@ -42,13 +42,13 @@ function RunExperiment()
     KbStrokeWait;
 
     %run practice trial and erase data
-    [PracticeData] = TrialFunctionFunction(nTrial, 0);
+    [PracticeData] = TrialFunctionFunction(nTrial, 0, w, rect);
     clear PracticeData;
 
     %Instructions to start real exp.
-    Screen('Preference', 'SkipSyncTests', 1);
-    screen_num = 0;
-    [w, rect] = Screen('OpenWindow', screen_num, [0 0 0], [0 0 800 600]);
+%     Screen('Preference', 'SkipSyncTests', 1);
+%     screen_num = 0;
+%     [w, rect] = Screen('OpenWindow', screen_num, [0 0 0], [0 0 800 600]);
     Screen('FillRect', w, [0 0 0], []);
     Screen('DrawText', w, 'Great Job! Now let''s start the experiment.', 40, 240, [250 250 250]);
     Screen('DrawText', w, 'Press any key to continue.', 40, 280, [250 250 250]);
@@ -60,15 +60,15 @@ function RunExperiment()
 
     if mod(data.subinfo.ppt, 2) == 1
         data.subinfo.moveOrder = 2; % Indicate that move block came second
-        [data.still] = TrialFunctionFunction(nTrial, 1);
+        [data.still] = TrialFunctionFunction(nTrial, 1, w, rect);
         save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
-        [data.move] = TrialFunctionFunction(nTrial, 2);
+        [data.move] = TrialFunctionFunction(nTrial, 2, w, rect);
         save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
     else
         data.subinfo.moveOrder = 1; % Indicate that move block came first
-        [data.move] = TrialFunctionFunction(nTrial, 2);
+        [data.move] = TrialFunctionFunction(nTrial, 2, w, rect);
         save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
-        [data.still] = TrialFunctionFunction(nTrial, 1);
+        [data.still] = TrialFunctionFunction(nTrial, 1, w, rect);
         save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
     end
 
