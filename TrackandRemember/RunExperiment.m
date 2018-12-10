@@ -30,7 +30,7 @@ function RunExperiment()
     [screenXpixels, screenYpixels] = Screen('WindowSize', w);
 
     %%Instruction text, currently for full screen
-    Screen('TextFont', w, 'Arial'); Screen('TextSize', w, 20);
+    Screen('TextFont', w, 'Arial'); Screen('TextSize', w, 15);
     Screen('DrawText', w, 'Welcome! Thank you for participating in our study.', 40, 200, [250 250 250]);
     Screen('DrawText', w, 'Please read the following instructions carefully:', 40, 240, [250 250 250]);
     Screen('DrawText', w,'During each trial, please keep your eyes fixed on the center of the screen.',40, 320, [250 250 250]);
