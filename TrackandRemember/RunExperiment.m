@@ -59,19 +59,25 @@ KbStrokeWait;
 % Counterbalance block types, run trials, and save data
     
 if mod(data.subinfo.ppt, 2) == 1
-    [data] = TrialFunctionFunction(nTrial, 1);
+    data.subinfo.moveOrder = 2; % Indicate that move block came second
+    [data.still] = TrialFunctionFunction(nTrial, 1);
     save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
-    [data] = TrialFunctionFunction(nTrial, 0);
+    [data.move] = TrialFunctionFunction(nTrial, 2);
     save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
 else
-    [data] = TrialFunctionFunction(nTrial, 0);
+    data.subinfo.moveOrder = 1; % Indicate that move block came first
+    [data.move] = TrialFunctionFunction(nTrial, 2);
     save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
-    [data] = TrialFunctionFunction(nTrial, 1);
+    [data.still] = TrialFunctionFunction(nTrial, 1);
     save(['/RawData/trackremember_ppt_' num2str(data.subinfo.ppt) '.mat'],'data');
 end
 
 Screen('CloseAll');
 ShowCursor;
+
+
+save(fullfile(rawDataPath, filename), 'data');
+
 
     
     

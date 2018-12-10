@@ -1,4 +1,6 @@
-function [data] = TrialFunctionFunction(nTrial,TrialType)
+%0: practice, 1: still, 2: motion
+
+function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
 
 %% Response Screen
 
@@ -163,10 +165,10 @@ if TrialType == 0
             
             if TargetArray(j) == 1
                 Screen('DrawText', w, '<---', xCenter-100, yCenter-300);
-                data.still.expr(j) = ColorArray(TrialStat(1,j), 1);
+                blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
             elseif TargetArray(j) == 2
                 Screen('DrawText', w, '--->', xCenter-100, yCenter-300);
-                data.still.expr(j) = ColorArray(TrialStat(2,j), 1);
+                blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
             Screen('Flip', w);
             [keyIsDown,secs,keyCode]=KbCheck();
@@ -174,21 +176,21 @@ if TrialType == 0
         
         
         if (keyCode(KbName('a')))
-            data.still.resp(j) = 1;
+            blockdata.resp(j) = 1;
         elseif (keyCode(KbName('s')))
-            data.still.resp(j) = 2;
+            blockdata.resp(j) = 2;
         elseif (keyCode(KbName('d')))
-            data.still.resp(j) = 3;
+            blockdata.resp(j) = 3;
         elseif (keyCode(KbName('f')))
-            data.still.resp(j) = 4;
+            blockdata.resp(j) = 4;
         elseif (keyCode(KbName('j')))
-            data.still.resp(j) = 5;
+            blockdata.resp(j) = 5;
         elseif (keyCode(KbName('k')))
-            data.still.resp(j) = 6;
+            blockdata.resp(j) = 6;
         elseif (keyCode(KbName('l')))
-            data.still.resp(j) = 7;
+            blockdata.resp(j) = 7;
         elseif (keyCode(KbName(';')))
-            data.still.resp(j) = 8;
+            blockdata.resp(j) = 8;
         end
         
         
@@ -245,10 +247,10 @@ elseif TrialType == 1
             
             if TargetArray(j) == 1
                 Screen('DrawText', w, '<---', xCenter-100, yCenter-300);
-                data.still.expr(j) = ColorArray(TrialStat(1,j), 1);
+                blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
             elseif TargetArray(j) == 2
                 Screen('DrawText', w, '--->', xCenter-100, yCenter-300);
-                data.still.expr(j) = ColorArray(TrialStat(2,j), 1);
+                blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
             Screen('Flip', w);
             [keyIsDown,secs,keyCode]=KbCheck();
@@ -256,27 +258,27 @@ elseif TrialType == 1
         
         
         if (keyCode(KbName('a')))
-            data.still.resp(j) = 1;
+            blockdata.resp(j) = 1;
         elseif (keyCode(KbName('s')))
-            data.still.resp(j) = 2;
+            blockdata.resp(j) = 2;
         elseif (keyCode(KbName('d')))
-            data.still.resp(j) = 3;
+            blockdata.resp(j) = 3;
         elseif (keyCode(KbName('f')))
-            data.still.resp(j) = 4;
+            blockdata.resp(j) = 4;
         elseif (keyCode(KbName('j')))
-            data.still.resp(j) = 5;
+            blockdata.resp(j) = 5;
         elseif (keyCode(KbName('k')))
-            data.still.resp(j) = 6;
+            blockdata.resp(j) = 6;
         elseif (keyCode(KbName('l')))
-            data.still.resp(j) = 7;
+            blockdata.resp(j) = 7;
         elseif (keyCode(KbName(';')))
-            data.still.resp(j) = 8;
+            blockdata.resp(j) = 8;
         end
         
         
     end
     
-    data.still.acc = data.still.resp == data.still.expr;
+    blockdata.acc = blockdata.resp == blockdata.expr;
     %MOVING TRIAL__________________________________________________________________________
     elseif TrialType == 2
         
