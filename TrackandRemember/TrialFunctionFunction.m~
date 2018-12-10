@@ -113,7 +113,6 @@ function [data] = TrialFunctionFunction(nTrial,TrialType)
 
         whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
         nTrial = 3;
-        
         for j = 1:nTrial
             Screen('DrawText', w, ['Press any key to start'], xCenter-150, yCenter, white);
             Screen('Flip', w);
@@ -491,9 +490,7 @@ function [data] = TrialFunctionFunction(nTrial,TrialType)
                 end
             end
     end
-    
-    % Temporary close screen (DELETE WHEN TRIAL FUNCTION CALLED BY RUNEXPERIMENT
-    Screen('CloseAll');
+    % Temporary close screen for     
     
     
 end
