@@ -1,5 +1,4 @@
 %0: practice, 1: still, 2: motion
-
 function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
 
 
