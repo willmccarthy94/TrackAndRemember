@@ -121,26 +121,165 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
 
 
 
-
-    %PRACTICE_____________________________________________________________________________________________________________________________________________
-    if TrialType == 0
-        keypress = 0;
-        whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
-        nTrial = 3;
-
-            Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
+%PRACTICE_____________________________________________________________________________________________________________________________________________
+if TrialType == 0
+    keypress = 0;
+    
+    whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+    nTrial = 3;
+    
+        Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
+        Screen('Flip', w);
+        KbStrokeWait; %Wait until a key press
+        
+    for j = 1:nTrial
+        
+        WaitSecs(ISI);
+        
+        %Set target location
+        if TargetArray(j) == 1 %Left
+            TargetLocation = dot.LocationL;
+        elseif TargetArray(j) == 2 %Right
+            TargetLocation = dot.LocationR;
+        end
+        
+        %Color information for each dot
+        colorInfo1 = ColorArray(TrialStat(1,j), 2:end);
+        colorInfo2 = ColorArray(TrialStat(2,j), 2:end);
+        
+        HideCursor();
+        
+        Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
+        Screen('Flip', w);
+        WaitSecs(ISI);
+        
+        %Draw two dots       
+        Screen('FillOval', w , colorInfo1, [dot.LocationL(1)-dot.size dot.LocationL(2)-dot.size dot.LocationL(1)+dot.size dot.LocationL(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of left field        
+        Screen('FillOval', w , colorInfo2, [dot.LocationR(1)-dot.size dot.LocationR(2)-dot.size dot.LocationR(1)+dot.size dot.LocationR(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of right field
+        Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
+        Screen('Flip', w);
+        WaitSecs(stimDur);
+        
+        [keyIsDown,secs,keyCode]=KbCheck();
+        
+        %Reponse Screen
+        while(~any(keyCode(whichKeys)))
+            Screen('FillRect', w, Color1, ColorLocation(1,:));
+            Screen('FillRect', w, Color2, ColorLocation(2,:));
+            Screen('FillRect', w, Color3, ColorLocation(3,:));
+            Screen('FillRect', w, Color4, ColorLocation(4,:));
+            Screen('FillRect', w, Color5, ColorLocation(5,:));
+            Screen('FillRect', w, Color6, ColorLocation(6,:));
+            Screen('FillRect', w, Color7, ColorLocation(7,:));
+            Screen('FillRect', w, Color8, ColorLocation(8,:));
+            
+            Screen('TextFont', w, 'Times'); %set text font
+            Screen('TextSize', w,20 ); %set text size
+            Screen('DrawText', w, 'a', LetterLoc(1,1),LetterLoc(1,2), [250 250 250]);
+            Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
+            Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
+            Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
+            Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+            Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+            Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+            Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+            %set location of answer keys below corresponding color answer
+            %box
+            
+            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
+            % horizontal line for prompt arrow
+            
+            if TargetArray(j) == 1
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
+                % left arrowhead for prompt arrow
+                blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
+            elseif TargetArray(j) == 2
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
+                % right arrowhead for prompt arrow
+                blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
+            end
             Screen('Flip', w);
             KbStrokeWait; %Wait until a key press
 
-        for j = 1:nTrial
-
-            WaitSecs(ISI);
-
-            %Set target location
-            if TargetArray(j) == 1 %Left
-                TargetLocation = dot.LocationL;
-            elseif TargetArray(j) == 2 %Right
-                TargetLocation = dot.LocationR;
+%STILL TRIAL_____________________________________________________________________________________________________________
+elseif TrialType == 1
+    keypress = 0;
+    
+    whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+    
+    Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
+    Screen('Flip', w);
+    KbStrokeWait; %Wait until a key pres
+    
+    for j = 1:nTrial                     
+        
+        %Set target location
+        if TargetArray(j) == 1 %Left
+            TargetLocation = dot.LocationL;
+        elseif TargetArray(j) == 2 %Right
+            TargetLocation = dot.LocationR;
+        end
+        
+        %Color information for each dot
+        colorInfo1 = ColorArray(TrialStat(1,j), 2:end);
+        colorInfo2 = ColorArray(TrialStat(2,j), 2:end);
+        
+        HideCursor();
+        
+        Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
+        Screen('Flip', w);
+        WaitSecs(ISI);
+        
+        %Draw two dots       
+        Screen('FillOval', w , colorInfo1, [dot.LocationL(1)-dot.size dot.LocationL(2)-dot.size dot.LocationL(1)+dot.size dot.LocationL(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of left field        
+        Screen('FillOval', w , colorInfo2, [dot.LocationR(1)-dot.size dot.LocationR(2)-dot.size dot.LocationR(1)+dot.size dot.LocationR(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of right field
+        Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
+        Screen('Flip', w);
+        WaitSecs(stimDur);
+        
+        [keyIsDown,secs,keyCode]=KbCheck();
+        
+        %Reponse Screen
+        while(~any(keyCode(whichKeys)))
+            Screen('FillRect', w, Color1, ColorLocation(1,:));
+            Screen('FillRect', w, Color2, ColorLocation(2,:));
+            Screen('FillRect', w, Color3, ColorLocation(3,:));
+            Screen('FillRect', w, Color4, ColorLocation(4,:));
+            Screen('FillRect', w, Color5, ColorLocation(5,:));
+            Screen('FillRect', w, Color6, ColorLocation(6,:));
+            Screen('FillRect', w, Color7, ColorLocation(7,:));
+            Screen('FillRect', w, Color8, ColorLocation(8,:));
+            
+            Screen('TextFont', w, 'Times'); %set text font
+            Screen('TextSize', w,20 ); %set text size
+            Screen('DrawText', w, 'a', LetterLoc(1,1),LetterLoc(1,2), [250 250 250]);
+            Screen('DrawText', w, 's', LetterLoc(2,1),LetterLoc(2,2), [250 250 250]);
+            Screen('DrawText', w, 'd', LetterLoc(3,1),LetterLoc(3,2), [250 250 250]);
+            Screen('DrawText', w, 'f', LetterLoc(4,1),LetterLoc(4,2), [250 250 250]);
+            Screen('DrawText', w, 'j', LetterLoc(5,1),LetterLoc(5,2), [250 250 250]);
+            Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
+            Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
+            Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
+            
+            Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
+            % horizontal line for prompt arrow
+            
+            if TargetArray(j) == 1
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
+                % left arrowhead for prompt arrow
+                blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
+            elseif TargetArray(j) == 2
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
+                % right arrowhead for prompt arrow
+                blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
             end
 
             %Color information for each dot
@@ -289,18 +428,18 @@ function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
                 Screen('DrawText', w, 'k', LetterLoc(6,1),LetterLoc(6,2), [250 250 250]);
                 Screen('DrawText', w, 'l', LetterLoc(7,1),LetterLoc(7,2), [250 250 250]);
                 Screen('DrawText', w, ';', LetterLoc(8,1),LetterLoc(8,2),  [250 250 250]);
-
-                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 7);
+                
+                Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2+screenXpixels/20 ,screenYpixels/4, 6);
                 % horizontal line for prompt arrow
-
-                if TargetArray(j) == 1
-                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                
+                if TargetArray(j) ==1 %left
+                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                    Screen('DrawLine',w, white, screenXpixels/2-screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                     % left arrowhead for prompt arrow
                     blockdata.expr(j) = ColorArray(TrialStat(1,j), 1);
-                elseif TargetArray(j) == 2
-                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 7);
-                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 7);
+                else %right
+                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4+screenYpixels/20, 6);
+                    Screen('DrawLine',w, white, screenXpixels/2+screenXpixels/20, screenYpixels/4, screenXpixels/2 ,screenYpixels/4-screenYpixels/20, 6);
                     % right arrowhead for prompt arrow
                     blockdata.expr(j) = ColorArray(TrialStat(2,j), 1);
                 end
