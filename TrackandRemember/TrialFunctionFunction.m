@@ -52,7 +52,7 @@ yCoords = [0 0 -40 40];
 allCoords = [xCoords; yCoords];
 
 %Dot size/location info
-dot.size = 50;
+dot.size = 40;
 dot.velocity=10; 
 dot.LocationL = [screenXpixels/4, yCenter]; %Left
 dot.LocationR = [screenXpixels*3/4, yCenter]; %Right
@@ -129,7 +129,7 @@ if TrialType == 0
     whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
     nTrial = 3;
     
-        Screen('DrawText', w, ['Press any key to start'], xCenter-150, yCenter, white);
+        Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
         Screen('Flip', w);
         KbStrokeWait; %Wait until a key press
         
@@ -154,9 +154,11 @@ if TrialType == 0
         Screen('Flip', w);
         WaitSecs(ISI);
         
-        %Draw two dots
-        Screen('DrawDots', w, dot.LocationL, dot.size, colorInfo1, [0 0], [1]); %This is random color dot
-        Screen('DrawDots', w, dot.LocationR, dot.size, colorInfo2, [0 0], [1]); %Another random color dot
+        %Draw two dots       
+        Screen('FillOval', w , colorInfo1, [dot.LocationL(1)-dot.size dot.LocationL(2)-dot.size dot.LocationL(1)+dot.size dot.LocationL(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of left field        
+        Screen('FillOval', w , colorInfo2, [dot.LocationR(1)-dot.size dot.LocationR(2)-dot.size dot.LocationR(1)+dot.size dot.LocationR(2)+dot.size],2*dot.size);
+        %Start ball 1 at the center of right field
         Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
         Screen('Flip', w);
         WaitSecs(stimDur);
@@ -233,7 +235,7 @@ elseif TrialType == 1
     
     whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
     
-    Screen('DrawText', w, ['Press any key to start'], xCenter-150, yCenter, white);
+    Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
     Screen('Flip', w);
     KbStrokeWait; %Wait until a key pres
     
@@ -256,11 +258,9 @@ elseif TrialType == 1
         Screen('Flip', w);
         WaitSecs(ISI);
         
-        %Draw two dots
-        %Screen('DrawDots', w, dot.LocationL, dot.size, colorInfo1, [0 0], [1]); %This is random color dot
+        %Draw two dots       
         Screen('FillOval', w , colorInfo1, [dot.LocationL(1)-dot.size dot.LocationL(2)-dot.size dot.LocationL(1)+dot.size dot.LocationL(2)+dot.size],2*dot.size);
-        %Start ball 1 at the center of left field
-        %Screen('DrawDots', w, dot.LocationR, dot.size, colorInfo2, [0 0], [1]); %Another random color dot
+        %Start ball 1 at the center of left field        
         Screen('FillOval', w , colorInfo2, [dot.LocationR(1)-dot.size dot.LocationR(2)-dot.size dot.LocationR(1)+dot.size dot.LocationR(2)+dot.size],2*dot.size);
         %Start ball 1 at the center of right field
         Screen('DrawLines', w, allCoords, 4, white, [xCenter yCenter]); %Fixation Cross
@@ -334,8 +334,12 @@ elseif TrialType == 1
     blockdata.acc = blockdata.resp == blockdata.expr;
     %MOVING TRIAL__________________________________________________________________________
     elseif TrialType == 2
-        
+                
         whichKeys = [KbName('a') KbName('s') KbName('d') KbName('f') KbName('j') KbName('k') KbName('l') KbName(';')];
+        
+        Screen('DrawText', w, ['Press any key to start'], screenXpixels/5, yCenter, white);
+        Screen('Flip', w);
+        KbStrokeWait; %Wait until a key press
         
         flipSpd = 2; %  a flip every 12 frames; higher number of frames --> slower
         
