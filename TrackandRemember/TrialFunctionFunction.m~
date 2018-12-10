@@ -1,7 +1,5 @@
-
-function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
 %0: practice, 1: still, 2: motion
-
+function [blockdata] = TrialFunctionFunction(nTrial,TrialType)
 
     %% Response Screen
     % Just for now
