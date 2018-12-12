@@ -42,7 +42,7 @@ b = bar(mean(mean(accs,3)));
 b.FaceColor = FaceColors(1,:);
 b.LineStyle = 'none';
 
-e = errorbar(mean(mean(accs,3)),(std(mean(accs,3))/sqrt(length((mean(accs,3))))));
+e = errorbar(mean(mean(accs,3)),(std(mean(accs,3))/sqrt(length((mean(accs,3)))))); % Mean by subject and standard errors 
 e.LineStyle = 'none';
 e.LineWidth = 1.5;
 e.Color = TintColors(1,:);
